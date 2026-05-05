@@ -3,7 +3,7 @@
 import { useCallback, useState } from "react";
 import { useGeocode } from "../hooks/useGeocode";
 import { useWeather } from "../hooks/useWeather";
-import type { Region } from "../lib/regions";
+import type { Region, RegionId } from "../lib/regions";
 import { createRegionId } from "../lib/regions";
 import { SearchBar } from "./SearchBar";
 import { WeatherCard } from "./WeatherCard";
@@ -44,6 +44,10 @@ export function WeatherDashboard() {
     [geocode, searchedRegions],
   );
 
+  const handleRemoveSearchedRegion = (regionId: RegionId) => {
+    setSearchedRegions((prev) => prev.filter((r) => r.id !== regionId));
+  };
+
   return (
     <div className="container mx-auto p-4 max-w-5xl pb-24 md:pb-4">
       <div className="hidden md:block text-center mb-12 mt-2">
@@ -65,10 +69,12 @@ export function WeatherDashboard() {
               <button
                 type="button"
                 key={region.id}
+                onClick={() => handleRemoveSearchedRegion(region.id)}
                 className="clay-btn clay-btn-active px-5 py-2.5 font-bold text-base cursor-pointer flex items-center gap-2 group"
                 title="クリックで削除"
               >
                 {region.name}
+                <span className="text-lg leading-none">×</span>
               </button>
             ))}
           </div>
