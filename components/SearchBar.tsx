@@ -33,6 +33,7 @@ export function SearchBar({
     e.preventDefault();
     if (!query.trim() || isLoading) return;
     await onSearch(query.trim());
+    setQuery("");
   };
 
   return (
