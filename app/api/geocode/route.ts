@@ -24,7 +24,7 @@ type ErrorResponse = Readonly<{
   error: string;
 }>;
 
-const _YAHOO_API_URL = "https://map.yahooapis.jp/geocode/V1/geoCoder";
+const YAHOO_API_URL = "https://map.yahooapis.jp/geocode/V1/geoCoder";
 
 /**
  * Yahoo!ジオコーダAPIへのプロキシエンドポイント
@@ -51,7 +51,7 @@ export async function GET(request: NextRequest): Promise<Response> {
 
   try {
     const encodedQuery = encodeURIComponent(query);
-    const url = `${_YAHOO_API_URL}?appid=${appId}&query=${encodedQuery}&output=json`;
+    const url = `${YAHOO_API_URL}?appid=${appId}&query=${encodedQuery}&output=json`;
 
     const response = await fetch(url);
 
