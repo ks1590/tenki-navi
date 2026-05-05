@@ -1,32 +1,65 @@
 "use client";
 
-import { useState } from "react";
-import type { Latitude, Longitude, Region, RegionId } from "@/lib/regions";
+import { useCallback, useState } from "react";
+import { useGeocode } from "../hooks/useGeocode";
 import { useWeather } from "../hooks/useWeather";
+import type { Region } from "../lib/regions";
+import { createRegionId } from "../lib/regions";
+import { SearchBar } from "./SearchBar";
 import { WeatherCard } from "./WeatherCard";
 
 export function WeatherDashboard() {
-  const [searchedRegions, _setSearchedRegions] = useState<Region[]>([
-    {
-      id: "1.44466845-139.64215289" as RegionId,
-      name: "神奈川県横浜市中区",
-      latitude: 35.44466845 as Latitude,
-      longitude: 139.64215289 as Longitude,
-    },
-    {
-      id: "2.16860042-136.91018386" as RegionId,
-      name: "愛知県名古屋市中区",
-      latitude: 35.16860042 as Latitude,
-      longitude: 136.91018386 as Longitude,
-    },
-  ]);
+  const [searchedRegions, setSearchedRegions] = useState<Region[]>([]);
+
+  const {
+    isLoading: isGeocoding,
+    error: geocodeError,
+    geocode,
+    clearError: clearGeocodeError,
+  } = useGeocode();
 
   const { data, isLoading, error } = useWeather(searchedRegions);
 
+  const handleRegionSearch = useCallback(
+    async (query: string) => {
+      const result = await geocode(query);
+      if (result) {
+        // 重複チェック（既に同じ座標の地域がないか確認）
+        const regionId = createRegionId(result.latitude, result.longitude);
+        const alreadyExists = searchedRegions.some((r) => r.id === regionId);
+
+        if (alreadyExists) {
+          return;
+        }
+
+        const newRegion: Region = {
+          id: regionId,
+          name: result.name,
+          latitude: result.latitude,
+          longitude: result.longitude,
+        };
+        setSearchedRegions((prev) => [...prev, newRegion]);
+      }
+    },
+    [geocode, searchedRegions],
+  );
+
   return (
     <div className="container mx-auto p-4 max-w-5xl pb-24 md:pb-4">
+      <div className="hidden md:block text-center mb-12 mt-2">
+        <SearchBar
+          onSearch={handleRegionSearch}
+          isLoading={isGeocoding}
+          error={geocodeError}
+          onClearError={clearGeocodeError}
+        />
+      </div>
+
       {searchedRegions.length > 0 && (
         <div className="mb-6">
+          <p className="text-center text-sm text-slate-400 font-medium mb-3">
+            🔍 検索結果
+          </p>
           <div className="flex flex-wrap gap-3 justify-center">
             {searchedRegions.map((region) => (
               <button
@@ -36,16 +69,25 @@ export function WeatherDashboard() {
                 title="クリックで削除"
               >
                 {region.name}
-                <span className="text-white/70 group-hover:text-white transition-colors text-lg leading-none">
-                  ×
-                </span>
               </button>
             ))}
           </div>
         </div>
       )}
 
-      <div className="min-h-[300px]">
+      <div className="min-h-75">
+        {error && (
+          <div className="text-center text-destructive p-4 clay-card">
+            エラーが発生しました: {error.message}
+          </div>
+        )}
+
+        {!isLoading && !error && searchedRegions.length === 0 && (
+          <div className="flex flex-col items-center justify-center text-muted-foreground p-12 clay-card border-none">
+            <p className="text-lg">地名を検索してください</p>
+          </div>
+        )}
+
         {!isLoading && !error && data.length > 0 && (
           <div className="flex flex-col gap-8">
             {searchedRegions.map((region) => {
