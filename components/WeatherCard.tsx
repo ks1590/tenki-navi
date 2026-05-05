@@ -16,7 +16,7 @@ export function WeatherCard({ region, weather }: WeatherCardProps) {
     <Card className="clay-card border-none">
       <CardHeader>
         <CardTitle className="text-2xl font-bold text-center text-slate-700">
-          {region.name}の天気
+          {region.name}
         </CardTitle>
       </CardHeader>
       <CardContent className="bg-slate-100/60 mx-4 p-6 rounded-[32px] shadow-inner border border-slate-200/50 overflow-x-auto">
@@ -32,7 +32,7 @@ export function WeatherCard({ region, weather }: WeatherCardProps) {
                   {formatDate(date)}
                 </span>
                 <span
-                  className="text-5xl mb-3 drop-shadow-lg transition-transform hover:scale-125 cursor-default"
+                  className="text-5xl mb-3 drop-shadow-lg cursor-default"
                   role="img"
                   aria-label={details.text}
                 >
