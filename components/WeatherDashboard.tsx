@@ -61,9 +61,6 @@ export function WeatherDashboard() {
 
       {searchedRegions.length > 0 && (
         <div className="mb-6">
-          <p className="text-center text-sm text-slate-400 font-medium mb-3">
-            🔍 検索結果
-          </p>
           <div className="flex flex-wrap gap-3 justify-center">
             {searchedRegions.map((region) => (
               <button
