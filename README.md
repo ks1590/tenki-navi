@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tenki Navi
 
-## Getting Started
+## 概要
 
-First, run the development server:
+Tenki Naviは、直感的な操作で指定した地域の天気予報を表示するウェブアプリです。
+ユーザーは地名や住所から簡単に天気を検索し、ダッシュボード上で複数の地点の天気を比較・確認することができます。
 
+## アプリURL
+
+https://tenki-navi.vercel.app
+
+## アプリの使い方
+
+1. 画面上部の検索バーに調べたい地名や住所を入力し、検索ボタンをクリックします。
+2. Yahoo!ジオコーダAPIとOpen-Meteo APIを通じて、指定した地点の正確な天気予報（天気、最高・最低気温）を取得し、ダッシュボードにカードとして追加されます。
+3. 複数の地名を連続して検索することで、ダッシュボードに複数の天気カードを並べて比較・確認することができます。
+
+## 技術的なポイント
+
+本プロジェクトでは、以下の点に重点を置いています。
+
+- アーキテクチャ
+  - Next.js App Routerを活用し、サーバーサイドでAPIへのプロキシ処理（Yahoo!ジオコーダAPI）を行うことで、クライアント側にAPIキーを露出させないセキュアな設計で構築
+  - TypeScriptのAdvanced Typesを活用した型安全性の確保（例：[regions.ts](https://github.com/ks1590/tenki-navi/blob/main/lib/regions.ts)）
+- UIデザイン
+  - Tailwind CSSとShadcn、クレイモーフィズムを取り入れた独自のUIを構築
+  - モバイル画面では、検索インプット（入力フォーム）の配置を下に固定しタッチ操作に配慮
+- 開発体験 
+  - Biomeを用いた高速なコードフォーマットと静的解析
+  - VitestとReact Testing Libraryによるユニットテストの実装
+- ベストプラクティスの実践
+  - カスタムフックを用いたロジックの分離や、保守性と再利用性の高いコンポーネント設計を適用
+
+## 開発環境のセットアップ
+
+### 1. 依存関係のインストール
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. 環境変数の設定
+`.env.local` ファイルを作成し、以下の値を設定してください。
+```env
+YAHOO_CLIENT_ID=自身のYahooクライアントID
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. 開発サーバーの起動
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 4. テストの実行
+```bash
+npm run test
+```
