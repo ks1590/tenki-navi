@@ -19,3 +19,13 @@ export type Region = Readonly<{
   name: string;
 }> &
   Coordinates;
+
+/**
+ * 座標からRegionIdを生成するヘルパー
+ * @param latitude 緯度
+ * @param longitude 経度
+ * @returns RegionId（例: "search-35.12345-139.12345"）
+ */
+export function createRegionId(latitude: number, longitude: number) {
+  return `search-${latitude}-${longitude}` as RegionId;
+}
