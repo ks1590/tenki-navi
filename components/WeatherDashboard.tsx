@@ -50,6 +50,7 @@ export function WeatherDashboard() {
 
   return (
     <div className="container mx-auto p-4 max-w-5xl pb-24 md:pb-4">
+      {/* デスクトップ: 上部に検索バー表示 */}
       <div className="hidden md:block text-center mb-12 mt-2">
         <SearchBar
           onSearch={handleRegionSearch}
@@ -104,6 +105,17 @@ export function WeatherDashboard() {
             })}
           </div>
         )}
+      </div>
+
+      {/* モバイル: 画面最下部に検索バーを固定表示 */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 p-3 bg-gradient-to-t from-sky-50/95 via-sky-50/80 to-transparent backdrop-blur-md md:hidden">
+        <SearchBar
+          onSearch={handleRegionSearch}
+          isLoading={isGeocoding}
+          error={geocodeError}
+          onClearError={clearGeocodeError}
+          placeholder="天気を検索"
+        />
       </div>
     </div>
   );
