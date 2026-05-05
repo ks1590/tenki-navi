@@ -16,7 +16,7 @@ export function WeatherCard({ region, weather }: WeatherCardProps) {
     <Card className="clay-card border-none">
       <CardHeader>
         <CardTitle className="text-2xl font-bold text-center text-slate-700">
-          {region.name}の天気
+          {region.name}
         </CardTitle>
       </CardHeader>
       <CardContent className="bg-slate-100/60 mx-4 p-6 rounded-[32px] shadow-inner border border-slate-200/50 overflow-x-auto">
