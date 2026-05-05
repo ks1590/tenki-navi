@@ -7,6 +7,7 @@ import type { Region, RegionId } from "../lib/regions";
 import { createRegionId } from "../lib/regions";
 import { SearchBar } from "./SearchBar";
 import { WeatherCard } from "./WeatherCard";
+import { WeatherCardSkeleton } from "./WeatherCardSkeleton";
 
 export function WeatherDashboard() {
   const [searchedRegions, setSearchedRegions] = useState<Region[]>([]);
@@ -50,6 +51,7 @@ export function WeatherDashboard() {
 
   return (
     <div className="container mx-auto p-4 max-w-5xl pb-24 md:pb-4">
+      {/* デスクトップ: 上部に検索バー表示 */}
       <div className="hidden md:block text-center mb-12 mt-2">
         <SearchBar
           onSearch={handleRegionSearch}
@@ -79,15 +81,19 @@ export function WeatherDashboard() {
       )}
 
       <div className="min-h-75">
-        {error && (
-          <div className="text-center text-destructive p-4 clay-card">
-            エラーが発生しました: {error.message}
+        {isLoading && searchedRegions.length > 0 && (
+          <div className="flex flex-col gap-8">
+            {searchedRegions.map((region) => (
+              <div key={`skeleton-${region.id}`}>
+                <WeatherCardSkeleton />
+              </div>
+            ))}
           </div>
         )}
 
-        {!isLoading && !error && searchedRegions.length === 0 && (
-          <div className="flex flex-col items-center justify-center text-muted-foreground p-12 clay-card border-none">
-            <p className="text-lg">地名を検索してください</p>
+        {error && (
+          <div className="text-center text-destructive p-4 clay-card">
+            エラーが発生しました: {error.message}
           </div>
         )}
 
@@ -104,6 +110,17 @@ export function WeatherDashboard() {
             })}
           </div>
         )}
+      </div>
+
+      {/* モバイル: 画面最下部に検索バーを固定表示 */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 p-3 bg-gradient-to-t from-sky-50/95 via-sky-50/80 to-transparent backdrop-blur-md md:hidden">
+        <SearchBar
+          onSearch={handleRegionSearch}
+          isLoading={isGeocoding}
+          error={geocodeError}
+          onClearError={clearGeocodeError}
+          placeholder="天気を検索"
+        />
       </div>
     </div>
   );
