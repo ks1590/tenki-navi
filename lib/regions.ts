@@ -15,7 +15,7 @@ export type Coordinates = {
 export type RegionId = Brand<string, "RegionId">;
 
 export type Region = Readonly<{
-  id: string;
+  id: RegionId;
   name: string;
 }> &
   Coordinates;
