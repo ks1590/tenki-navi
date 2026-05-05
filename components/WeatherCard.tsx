@@ -32,7 +32,7 @@ export function WeatherCard({ region, weather }: WeatherCardProps) {
                   {formatDate(date)}
                 </span>
                 <span
-                  className="text-5xl mb-3 drop-shadow-lg transition-transform hover:scale-125 cursor-default"
+                  className="text-5xl mb-3 drop-shadow-lg cursor-default"
                   role="img"
                   aria-label={details.text}
                 >

@@ -37,7 +37,10 @@ export function SearchBar({
 
   return (
     <div className="w-full max-w-2xl mx-auto">
-      <form onSubmit={handleSubmit} className="p-2 flex gap-2 items-center">
+      <form
+        onSubmit={handleSubmit}
+        className="clay-search-container p-2 flex gap-2 items-center"
+      >
         <div className="relative flex-1">
           <input
             id="search-location-input"
@@ -48,7 +51,7 @@ export function SearchBar({
               if (error) onClearError();
             }}
             placeholder={placeholder}
-            className="w-full pl-5 pr-5 py-4 text-lg font-medium rounded-[18px] bg-transparent text-slate-700 placeholder-slate-400/70 outline-none transition-all duration-300"
+            className="w-full pl-5 pr-5 py-4 text-lg font-medium rounded-[18px] bg-transparent text-slate-700 placeholder-slate-400/70 outline-none transition-all duration-300 clay-search-inset"
             disabled={isLoading}
           />
         </div>
@@ -56,7 +59,7 @@ export function SearchBar({
           id="search-location-button"
           type="submit"
           disabled={isLoading || !query.trim()}
-          className="px-7 py-4 font-bold text-base cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 whitespace-nowrap transition-all duration-200"
+          className="clay-search-btn px-7 py-4 font-bold text-base cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2 whitespace-nowrap transition-all duration-200"
         >
           {isLoading ? (
             <>

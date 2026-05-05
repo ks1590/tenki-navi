@@ -178,10 +178,6 @@
     pointer-events: none;
   }
 
-  .clay-pill:hover {
-    transform: translateY(-5px) scale(1.05);
-  }
-
   /* 検索バー */
   .clay-search-container {
     border-radius: 26px;
@@ -220,12 +216,14 @@
     position: relative;
     z-index: 2;
   }
+
   .clay-search-inset:focus {
     background: rgba(224, 240, 255, 0.7);
     box-shadow:
       inset 4px 4px 10px rgba(14, 165, 233, 0.18),
       inset -2px -2px 8px rgba(255, 255, 255, 0.9);
   }
+
   .clay-search-inset::placeholder {
     color: rgba(148, 163, 184, 0.7);
   }
@@ -259,15 +257,7 @@
     border-radius: 20px;
     pointer-events: none;
   }
-  .clay-search-btn:hover:not(:disabled) {
-    background: linear-gradient(145deg, #7dd3fc, #38bdf8);
-    box-shadow:
-      6px 6px 16px rgba(14, 165, 233, 0.4),
-      -3px -3px 10px rgba(255, 255, 255, 0.4),
-      inset 0px 2px 4px rgba(255, 255, 255, 0.5),
-      inset 0px -2px 4px rgba(2, 132, 199, 0.2);
-    transform: translateY(-1px);
-  }
+
   .clay-search-btn:active:not(:disabled) {
     transform: translateY(1px);
     box-shadow:
